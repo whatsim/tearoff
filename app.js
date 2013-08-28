@@ -4,7 +4,11 @@ var express	= require('express'), app = express();
 var fs		= require('fs');
 var crypt 	= require('crypto');
 var Q 		= require('q');
-var redis	= require('redis');
+var redis	= require('redis'), client = redis.createClient();
+
+//express conf
+
+app.use(express.bodyParser());
 
 //localization
 
@@ -12,7 +16,7 @@ var serverRoot = require('path').dirname(require.main.filename);
 
 //routes
 
-app.get('/',home);
+app.get('/',getHome);
 app.post('/addPage',postPage);
 app.get('/:page',getPage);
 
@@ -20,24 +24,32 @@ app.listen(8080);
 
 //handle routes
 
-function home(req,res){
+function getHome(req,res){
 	res.send('hi');
 }
 
 function postPage(req,res){
-	createURL(6)
+	createURL(4)
 		.then(savePage)
 		.then(success, error);
 		
-	function savePage(){
-		return pretendAsync();
+	function savePage(data){
+		var deferred = Q.defer();
+		var o = {
+			body : req.body.text
+		}
+		client.set(data,JSON.stringify(o),function (err, reply){
+			if(err) deferred.reject('failed to save');
+			deferred.resolve(data);
+		});
+		return deferred.promise
 	}
 		
 	function success(data){
 		res.send(data);
 	}
 	function error(err){
-		res.send('error');
+		res.send(err);
 	}
 		
 }
@@ -47,18 +59,22 @@ function getPage(req,res){
 		.then(success, error);
 		
 	function loadPage(url){
-		console.log(url);
-		return pretendAsync();
+		var deferred = Q.defer();
+		client.get(url,function (err, reply){
+			if(err) deferred.reject('no such bulletin');
+			deferred.resolve(reply);
+		});
+		return deferred.promise
 	}
 	function success(data){
 		res.send(data);
 	}
 	function error(err){
-		res.send('error');
+		res.send(err);
 	}
 }
 
-//generate Random Base64 string of length
+//generate Random string of length
 
 function createURL(len){
 	var deferred = Q.defer();
@@ -75,6 +91,6 @@ function createURL(len){
 //this is to fake async code to test promises.
 function pretendAsync(){
 	var deferred = Q.defer();
-	setTimeout(function(){deferred.resolve('hai')},1000);
+	setTimeout(function(){deferred.resolve('hai')},10);
 	return deferred.promise
 }

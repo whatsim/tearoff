@@ -1,96 +1,110 @@
-//requires
+// requires
 
-var express	= require('express'), app = express();
 var fs		= require('fs');
-var crypt 	= require('crypto');
+var express	= require('express'), app = express();
+var jade	= require('jade');
 var Q 		= require('q');
-var redis	= require('redis'), client = redis.createClient();
+var db		= require('redisDriver');
 
-//express conf
+// express conf
 
 app.use(express.bodyParser());
 
-//localization
+// localization
 
 var serverRoot = require('path').dirname(require.main.filename);
 
-//routes
+var fPageObj = {
+	text	:	'copy goes here',	// the message. markdown likely
+	expires	:	10,					// time the message is no longer accessible (only deleted if actually accessed after that time?)
+	loads	:	-1,					// number of allowed loads
+	visitors : [],					// hash of ip to remember them by
+	strict : true					// repeated loads from one user deplete the count
+}
+
+// routes
 
 app.get('/',getHome);
-app.post('/addPage',postPage);
 app.get('/:page',getPage);
+
+// rest routes should go here
+
+app.get('/peek/:page',getPeek);
+app.post('/addPage',postPage);
 
 app.listen(8080);
 
-//handle routes
+// handle routes
 
 function getHome(req,res){
 	res.send('hi');
 }
 
 function postPage(req,res){
-	createURL(4)
-		.then(savePage)
-		.then(success, error);
+	db.savePage(fPageObj).then(success, error);
 		
-	function savePage(data){
-		var deferred = Q.defer();
+	function success(url){
 		var o = {
-			body : req.body.text
+			status : 200,
+			url : url	
 		}
-		client.set(data,JSON.stringify(o),function (err, reply){
-			if(err) deferred.reject('failed to save');
-			deferred.resolve(data);
-		});
-		return deferred.promise
-	}
-		
-	function success(data){
-		res.send(data);
+		res.send(JSON.stringify(o));
 	}
 	function error(err){
-		res.send(err);
+		var o = {
+			status : 500,
+			error : err
+		}
+		res.send(JSON.stringify(o),500);
 	}
 		
 }
 
 function getPage(req,res){
-	loadPage(req.params.page)
-		.then(success, error);
+	db.loadPage(req.params.page)
+		.then(loaded, error);
+	
+	function loaded(data){
 		
-	function loadPage(url){
-		var deferred = Q.defer();
-		client.get(url,function (err, reply){
-			if(err) deferred.reject('no such bulletin');
-			deferred.resolve(reply);
-		});
-		return deferred.promise
+		if(data.strict) data.loads --;
+		else {
+			var ipHash = "ASDASDASDA";
+			if(data.vistors.indexOf(ipHash) < 0){
+				data.vistors.push(ipHash);
+				data.loads --;
+			}
+		}
+		
+		if(data.loads > 0){
+			
+			db.updatePage(req.params.page,data)
+				.then(success,error)	
+		} else {
+			
+			db.deletePage(req.params.page,data)
+				.then(success,error)	
+		}
+	
+		function success(reply){
+			res.send(reply);
+		}
 	}
-	function success(data){
-		res.send(data);
-	}
+	
 	function error(err){
 		res.send(err);
 	}
 }
 
-//generate Random string of length
-
-function createURL(len){
-	var deferred = Q.defer();
-	crypt.randomBytes(len, function(err, buf) {
-		if(err) deferred.reject(err);
-		var token = buf.toString('hex');
-		deferred.resolve(token)
-	});	
-	return deferred.promise
+function getPeek(req,res){
+	db.loadPage(req.params.page)
+		.then(success, error);
+	
+	function success(data){
+		res.json(data);
+	}
+	function error(err){
+		res.json(err);
+	}
 }
 
-//createURL(6).then(console.log,console.log);
-
-//this is to fake async code to test promises.
-function pretendAsync(){
-	var deferred = Q.defer();
-	setTimeout(function(){deferred.resolve('hai')},10);
-	return deferred.promise
-}
+// generate Random string of length

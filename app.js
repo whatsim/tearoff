@@ -9,11 +9,13 @@ var sha1	= require('sha1');
 
 // express conf
 
-app.use(express.bodyParser());
-
-// localization
-
 var serverRoot = require('path').dirname(require.main.filename);
+
+app.use(express.bodyParser());
+app.set('views', serverRoot + '/views');
+app.set('view engine', 'jade');
+
+// dummy page object to insert
 
 var fPageObj = {
 	text	:	'copy goes here',	// the message. markdown likely
@@ -23,7 +25,7 @@ var fPageObj = {
 	strict : true					// repeated loads from one user deplete the count
 }
 
-// routes
+// main routes
 
 app.get('/',getHome);
 app.get('/:page',getPage);
@@ -31,14 +33,21 @@ app.get('/:page',getPage);
 // rest routes should go here
 
 app.get('/peek/:page',getPeek);
-app.post('/addPage',postPage);
+app.post('/postPage',postPage);
+
+// asset routes
+
+app.get('/assets/:type/:name',getFile);
 
 app.listen(8080);
 
 // handle routes
 
 function getHome(req,res){
-	res.send('hi');
+	page = {
+		title:'home'
+	};
+	res.render('home',page);
 }
 
 function postPage(req,res){
@@ -49,14 +58,14 @@ function postPage(req,res){
 			status : 200,
 			url : url	
 		}
-		res.send(JSON.stringify(o));
+		res.json(o);
 	}
 	function error(err){
 		var o = {
 			status : 500,
 			error : err
 		}
-		res.send(JSON.stringify(o),500);
+		res.json(o.status,o);
 	}
 		
 }
@@ -76,7 +85,6 @@ function getPage(req,res){
 				data.loads --;
 			}
 		}
-		console.log('hello');
 		if((1*data.loads) > 0){
 			
 			db.updatePage(req.params.page,data)
@@ -108,4 +116,16 @@ function getPeek(req,res){
 	function error(err){
 		res.json(err);
 	}
+}
+
+// I can use q internal to this, but I'm not sure how useful that is.
+
+function getFile(req,res){
+	fs.stat(serverRoot+req.url,function(err,stats){
+		if(err){
+			res.render('404',404);
+		} else {
+			res.sendfile(serverRoot+req.url);
+		}
+	});
 }

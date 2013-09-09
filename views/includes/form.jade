@@ -1,7 +1,9 @@
-form(id="submission", method="post", action="/postPage")
-	textarea(id="pageText",name="pageText",placeholder="Text of your post goes here.")
-	input(id="loads",name="loads",type="number",value="10")
-	input(id="strict",name="strict",type="checkbox")
-	| Strict Mode
-	input(id="submitPage",type="submit")
-	
+#newPage
+	h1 Post a new bulletin.
+	form(id="submission", method="post", action="/postPage")
+		textarea(id="pageText",name="pageText",placeholder="Text of your post goes here.")
+		input(id="loads",name="loads",type="number",value="10")
+		input(id="strict",name="strict",type="checkbox")
+		| Strict Mode
+		input(id="submitPage",type="submit")
+		

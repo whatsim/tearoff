@@ -45,13 +45,27 @@ app.listen(8080);
 
 function getHome(req,res){
 	page = {
-		title:'home'
+		'page' : {
+			'title' : 'home'
+		}
 	};
 	res.render('home',page);
 }
 
 function postPage(req,res){
-	db.savePage(fPageObj).then(success, error);
+	
+	// pageText
+	// loads
+	// strict
+	
+	o = {
+		pageText : req.body.pageText,
+		loads : req.body.loads,
+		strict : req.body.strict,
+		vistors : []
+	};
+	
+	db.savePage(o).then(success, error);
 		
 	function success(url){
 		var o = {
@@ -86,7 +100,6 @@ function getPage(req,res){
 			}
 		}
 		if((1*data.loads) > 0){
-			
 			db.updatePage(req.params.page,data)
 				.then(success,error)	
 		} else {
@@ -95,10 +108,18 @@ function getPage(req,res){
 				.then(success,error)	
 		}
 	
-	}
+		function success(reply){
+			delete data.visitors;
+			delete data.expires;
+			var page = {
+				'page' : {
+					'data' : data,
+					'title' : 'testTitle'
+				}
+			};
+			res.render('page',page);
+		}
 	
-	function success(reply){
-		res.send(reply);
 	}
 	
 	function error(err){

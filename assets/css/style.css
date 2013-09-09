@@ -12,7 +12,7 @@ h1 {
 	padding:0;
 }
 #newPage {
-	margin:100px auto;
+	margin:10% auto;
 	width:420px;	
 }
 form>input, form>textarea {
@@ -22,24 +22,35 @@ form>input, form>textarea {
 	padding:9px 10px 10px;
 	border-radius:1px;
 	font-size:1em;
-	background:#dfdedd;
+	background:#efeeed;
 	border:0;
 	margin:10px 0;
 	clear:both;
 	color:#334;
 }
+#pageText {
+	height:200px;	
+}
 #submitPage {
 	background:#334;
 	color:white;
 }
+.caption {
+	font-size:.8em;
+	font-weight:100;
+	display:block;
+	padding:5px 22px 5px;
+}
 .label {
 	font-size:.8em;
-	background:transparent;
 	font-weight:100;
 	float:left;
 	display:inline;
 	line-height: 1.5em;
 	padding:5px 0 5px;
+}
+.label strong {
+	font-weight:400;
 }
 .checkboxWithLabel {
 	background:transparent;	

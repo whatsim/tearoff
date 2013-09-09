@@ -2,8 +2,13 @@
 	h1 Post a new bulletin.
 	form(id="submission", method="post", action="/postPage")
 		textarea(id="pageText",name="pageText",placeholder="Text of your post goes here.")
+		span.label
+			| Allowed number of views
 		input(id="loads",name="loads",type="number",value="10")
-		input(id="strict",name="strict",type="checkbox")
-		| Strict Mode
+		.checkboxWithLabel
+			input(id="strict",name="strict",type="checkbox")
+			span.label.checkboxLabel
+				| Strict Mode
+			.clear
 		input(id="submitPage",type="submit")
 		

@@ -4,7 +4,7 @@ var fs		= require('fs');
 var express	= require('express'), app = express();
 var jade	= require('jade');
 var Q 		= require('q');
-var db		= require('redisDriver');
+var db		= require('./scripts/redisDriver.js');
 var sha1	= require('sha1');
 
 // express conf

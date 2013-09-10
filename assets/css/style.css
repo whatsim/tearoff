@@ -33,6 +33,7 @@ form>input, form>textarea {
 }
 #submitPage {
 	background:#334;
+	-webkit-appearance: none;
 	color:white;
 }
 .caption {

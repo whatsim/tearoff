@@ -1,6 +1,6 @@
 var Q 		= require('q');
 var redis	= require('redis'), client = redis.createClient();
-var util	= require('tearoffUtilities');
+var util	= require('./tearoffUtilities.js');
 
 // can serve as template for other data sources.
 // must expose a loadPage, savePage, and updatePage method and return a Q promise 

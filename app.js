@@ -18,13 +18,13 @@ app.set('view engine', 'jade');
 
 // dummy page object to insert
 
-var fPageObj = {
-	text	:	'copy goes here',	// the message. markdown likely
-	expires	:	-1,					// time the message is no longer accessible (only deleted if actually accessed after that time?)
-	loads	:	10,					// number of allowed loads
-	visitors : [],					// hash of ip to remember them by
-	strict : true					// repeated loads from one user deplete the count
-}
+//	var fPageObj = {
+// 		text	:	'copy goes here',	// the message. markdown likely
+// 		expires	:	-1,					// time the message is no longer accessible (only deleted if actually accessed after that time?)
+// 		loads	:	10,					// number of allowed loads
+// 		visitors : [],					// hash of ip to remember them by
+// 		strict : true					// repeated loads from one user deplete the count
+//	}
 
 // main routes
 
@@ -139,6 +139,9 @@ function getPeek(req,res){
 		.then(success, error);
 	
 	function success(data){
+		delete data.visitors;
+		delete data.expires;
+		delete data.pageText;
 		res.json(data);
 	}
 	function error(err){

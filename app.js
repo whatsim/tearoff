@@ -16,16 +16,6 @@ app.use(express.bodyParser());
 app.set('views', serverRoot + '/views');
 app.set('view engine', 'jade');
 
-// dummy page object to insert
-
-//	var fPageObj = {
-// 		text	:	'copy goes here',	// the message. markdown likely
-// 		expires	:	-1,					// time the message is no longer accessible (only deleted if actually accessed after that time?)
-// 		loads	:	10,					// number of allowed loads
-// 		visitors : [],					// hash of ip to remember them by
-// 		strict : true					// repeated loads from one user deplete the count
-//	}
-
 // main routes
 
 app.get('/',getHome);
@@ -115,7 +105,7 @@ function getPage(req,res){
 			var page = {
 				'page' : {
 					'data' : data,
-					'title' : 'testTitle'
+					'title' : 'Tearoff'
 				}
 			};
 			res.render('page',page);
@@ -127,7 +117,7 @@ function getPage(req,res){
 		var page = {
 			'page' : {
 				'data' : err,
-				'title' : 'Not Found'
+				'title' : 'Tearoff - Not Found'
 			}
 		};
 		res.render('404', page);

@@ -132,3 +132,6 @@ form>input, form>textarea {
 #post a {
 	color:#334;
 }
+#post code {
+	word-break:break-all;	
+}

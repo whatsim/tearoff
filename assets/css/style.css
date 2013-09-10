@@ -2,16 +2,17 @@ html, body {
 	font-size:100%;	
 	font-family:Helvetica;
 	color:#334;
+	font-weight: 100;
 }
 p {
 	font-size:1em;	
 }
-h1 {
+#newPage h1 {
 	font-size:1em;	
 	margin:0;
 	padding:0;
 }
-#newPage {
+#wrapper {
 	margin:10% auto;
 	width:420px;	
 }
@@ -66,4 +67,66 @@ form>input, form>textarea {
 }
 .clear {
 	clear:both;	
+}
+
+#post p {
+	font-weight:100;	
+	font-size:1em;
+	line-height:1.3em;
+}
+#post strong, #post b {
+	font-weight:400;	
+}
+#post em {
+	font-style:italic;
+}
+#post h1 {
+	font-size:2em;
+	line-height: 1.3em;
+	padding:0;
+	margin:.5em 0;
+	font-weight: 700;
+}
+#post h2 {
+	font-size:1.75em;
+	line-height: 1.3em;
+	margin:.57em 0;
+	padding:0;
+	font-weight: 500;
+}
+#post h3 {
+	font-size:1.5em;
+	line-height: 1.3em;
+	margin:.66em 0;
+	padding:0;
+	font-weight: 500;
+}
+#post h4 {
+	font-size:1.25em;
+	line-height: 1.3em;
+	margin:.8em 0;
+	padding:0;
+	font-weight: 500;
+}
+#post h5 {
+	font-size:1em;
+	line-height: 1.3em;
+	margin:1em 0;
+	padding:0;
+	font-weight: 500;
+}
+#post h6 {
+	font-size:1em;
+	line-height: 1.3em;
+	margin:1em 0;
+	padding:0;
+	font-weight: 400;
+}
+#post ol, #post ul {
+	list-style: outside;
+	padding:0.2em 1em 0;
+	margin:1em 0;
+}
+#post li {
+	padding:.1em 0;	
 }

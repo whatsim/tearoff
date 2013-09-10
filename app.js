@@ -6,6 +6,7 @@ var jade	= require('jade');
 var Q 		= require('q');
 var db		= require('./scripts/redisDriver.js');
 var sha1	= require('sha1');
+var util	= require('./scripts/tearoffUtilities.js');
 
 // express conf
 
@@ -59,7 +60,7 @@ function postPage(req,res){
 	// strict
 	
 	o = {
-		pageText : req.body.pageText,
+		pageText : util.marked(req.body.pageText),
 		loads : req.body.loads,
 		strict : req.body.strict,
 		vistors : []
@@ -123,7 +124,13 @@ function getPage(req,res){
 	}
 	
 	function error(err){
-		res.send(err);
+		var page = {
+			'page' : {
+				'data' : err,
+				'title' : 'Not Found'
+			}
+		};
+		res.render('404', page);
 	}
 }
 

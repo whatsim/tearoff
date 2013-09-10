@@ -3,9 +3,23 @@
 
 var Q		= require('q');
 var crypt 	= require('crypto');
+var marked	= require('marked'); 
+
+// configure marked here so its not in app
+
+marked.setOptions({
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false
+});
+
+exports.marked = marked;
 
 // generate Random string of length
-
 
 exports.createURL = function(len){
 	var deferred = Q.defer();

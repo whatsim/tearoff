@@ -2,5 +2,10 @@ include includes/head
 	body
 		#wrapper
 			include includes/mast
+			#post
+				h1
+					| Sorry, no such bulletin.
+				p
+					#{locals.page.data.pageText}
 			include includes/form
 			include includes/foot

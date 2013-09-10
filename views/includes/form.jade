@@ -1,6 +1,6 @@
 #newPage
 	h1 Post a new bulletin.
-	form(id="submission", method="post", action="/postPage")
+	form(id="submission", method="post", onsubmit="return postPage()", action="/postPage")
 		textarea(id="pageText",name="pageText",placeholder="Text of your post goes here.")
 		span.label
 			| Allowed number of views

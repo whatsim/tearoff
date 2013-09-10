@@ -63,7 +63,7 @@ function postPage(req,res){
 		pageText : util.marked(req.body.pageText),
 		loads : req.body.loads,
 		strict : req.body.strict,
-		vistors : []
+		visitors : []
 	};
 	
 	db.savePage(o).then(success, error);
@@ -95,8 +95,8 @@ function getPage(req,res){
 		} else {
 			var ipHash = sha1(req.ip);
 			
-			if(data.vistors.indexOf(ipHash) < 0){
-				data.vistors.push(ipHash);
+			if(data.visitors.indexOf(ipHash) < 0){
+				data.visitors.push(ipHash);
 				data.loads --;
 			}
 		}

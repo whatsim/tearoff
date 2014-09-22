@@ -35,9 +35,9 @@ app.listen(8080);
 // handle routes
 
 function getHome(req,res){
-	page = {
+	var page = {
 		'page' : {
-			'title' : 'home'
+			'title' : 'Tearoff - Home'
 		}
 	};
 	res.render('home',page);
@@ -49,14 +49,14 @@ function postPage(req,res){
 	// loads
 	// strict
 	
-	o = {
+	var saveO = {
 		pageText : util.marked(req.body.pageText),
 		loads : req.body.loads,
 		strict : req.body.strict,
 		visitors : []
 	};
 	
-	db.savePage(o).then(success, error);
+	db.savePage(saveO).then(success, error);
 		
 	function success(url){
 		var o = {

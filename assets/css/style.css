@@ -135,3 +135,8 @@ form>input, form>textarea {
 #post code {
 	word-break:break-all;	
 }
+#post img {
+	width:150%;
+	position: relative;
+	left:50%;
+}

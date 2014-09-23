@@ -136,7 +136,7 @@ form>input, form>textarea {
 	word-break:break-all;	
 }
 #post img {
-	width:150%;
+	width:120%;
+	margin:0.65em -10%;
 	position: relative;
-	left:-25%;
 }

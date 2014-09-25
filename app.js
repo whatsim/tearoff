@@ -19,6 +19,7 @@ app.set('view engine', 'jade');
 // main routes
 
 app.get('/',getHome);
+app.get('/about',getAbout);
 app.get('/:page',getPage);
 
 // rest routes should go here
@@ -41,6 +42,15 @@ function getHome(req,res){
 		}
 	};
 	res.render('home',page);
+}
+
+function getAbout(req,res){
+	var page = {
+		'page' : {
+			'title' : 'Tearoff - About'
+		}
+	};
+	res.render('about',page)
 }
 
 function postPage(req,res){

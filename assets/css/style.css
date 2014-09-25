@@ -140,3 +140,13 @@ form>input, form>textarea {
 	margin:0.65em -10%;
 	position: relative;
 }
+.foot {
+	margin:1.3em 0;
+}
+.foot a {
+	font-size: .8em;
+	color:#334;
+	opacity:0.75;
+	float:left;
+	margin-right: 0.65em
+}

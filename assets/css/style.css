@@ -149,4 +149,8 @@ form>input, form>textarea {
 	opacity:0.75;
 	float:left;
 	margin-right: 0.65em
+	text-decoration:none;
+}
+.foot a:hover {
+	text-decoration:underline;
 }

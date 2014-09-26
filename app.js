@@ -63,7 +63,7 @@ function postPage(req,res){
 
 	var saveO = {
 		pageText : util.marked(req.body.pageText),
-		loads : req.body.loads + 1,
+		loads : req.body.loads*1 + 1,
 		strict : req.body.strict,
 		expires : time.setUTCDate(req.body.days+time.getUTCDate()),
 		visitors : []

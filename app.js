@@ -60,13 +60,13 @@ function postPage(req,res){
 	// strict
 	
 	var time = new Date()
-
+	var ipHash = sha1(req.ip);
 	var saveO = {
 		pageText : util.marked(req.body.pageText),
-		loads : req.body.loads*1 + 1,
+		loads : req.body.loads,
 		strict : req.body.strict,
 		expires : time.setUTCDate(req.body.days+time.getUTCDate()),
-		visitors : []
+		visitors : [ipHash]
 	};
 
 	db.savePage(saveO).then(success, error);
@@ -103,13 +103,19 @@ function getPage(req,res){
 				data.loads --;
 			}
 		}
-		if((1*data.loads) > 0 && (1*data.expires > Date.now())){
+
+		var expired = 1*data.expires < Date.now();
+
+		if((1*data.loads) > 0 && !expired){
 			db.updatePage(req.params.page,data)
 				.then(success,error)	
 		} else {
-			
+			var cb = success;
+			if(expired) cb = error
+			// don't show the post if its expired
+
 			db.deletePage(req.params.page,data)
-				.then(error,error)	
+				.then(cb,error)	
 		}
 	
 		function success(reply){

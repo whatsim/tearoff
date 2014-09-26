@@ -3,7 +3,10 @@
 	form(id="submission", method="post", onsubmit="return postPage()", action="/postPage")
 		textarea(id="pageText",name="pageText",placeholder="Text of your post goes here.")
 		span.label
-			| Allowed number of views
+			| Last how many days from posting?
+		input(id="day",name="days",type="number",value="7")
+		span.label
+			| Allow how many views?
 		input(id="loads",name="loads",type="number",value="10")
 		.checkboxWithLabel
 			input(id="strict",name="strict",type="checkbox")

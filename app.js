@@ -59,13 +59,16 @@ function postPage(req,res){
 	// loads
 	// strict
 	
+	var time = new Date()
+
 	var saveO = {
 		pageText : util.marked(req.body.pageText),
 		loads : req.body.loads,
 		strict : req.body.strict,
+		expires : time.setUTCDate(req.body.days+time.getUTCDate()),
 		visitors : []
 	};
-	
+
 	db.savePage(saveO).then(success, error);
 		
 	function success(url){
@@ -100,13 +103,13 @@ function getPage(req,res){
 				data.loads --;
 			}
 		}
-		if((1*data.loads) > 0){
+		if((1*data.loads) > 0 && (1*data.expires > Date.now())){
 			db.updatePage(req.params.page,data)
 				.then(success,error)	
 		} else {
 			
 			db.deletePage(req.params.page,data)
-				.then(success,error)	
+				.then(error,error)	
 		}
 	
 		function success(reply){

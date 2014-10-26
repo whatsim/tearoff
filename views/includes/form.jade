@@ -3,8 +3,8 @@
 	form(id="submission", method="post", onsubmit="return postPage()", action="/postPage")
 		textarea(id="pageText",name="pageText",placeholder="Text of your post goes here.")
 		span.label
-			| Last how many days from posting?
-		input(id="day",name="days",type="number",value="7")
+			| Last how many hours from posting?
+		input(id="hours",name="hours",type="number",value="24")
 		span.label
 			| Allow how many views?
 		input(id="loads",name="loads",type="number",value="10")

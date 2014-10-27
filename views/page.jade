@@ -1,7 +1,11 @@
-include includes/head
+doctype 5
+html(lang="en")
+	head
+		title=locals.page.title
+		link(rel="stylesheet", type="text/css", href="/assets/css/style.css")
+		script(type="text/javascript", src="/assets/scripts/post.js")
+		meta(name='viewport', content='width=520, user-scalable=no')
 	body
 		#wrapper
-			include includes/mast
-				#post
-					|	!{locals.page.data.pageText}
+			block content
 			include includes/foot

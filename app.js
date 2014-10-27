@@ -135,7 +135,7 @@ function getPage(req,res){
 					'title' : 'Tearoff'
 				}
 			};
-			res.render('page',page);
+			res.render('post',page);
 		}
 	
 	}

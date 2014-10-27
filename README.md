@@ -7,3 +7,7 @@ Potential use case, you're doing a promotion of Twitter or a livestream and need
 Another, you want to post fliers for an event that link to information about the event but only allow a certain number of people to look into it for crowd control, or want the information to go away after the event happens.
 
 Tearoff won't do rich content, but you can of course link to stuff elsewhere.
+
+### License
+
+MIT 2014 [http://whatsim.mit-license.org](http://whatsim.mit-license.org)

@@ -6,7 +6,7 @@ var crypt 	= require('crypto');
 var marked	= require('marked'); 
 var adjNoun = require('adj-noun');
 
-adjNoun.seed(31337);
+adjNoun.seed(Date.now());
 
 // configure marked here so its not in app
 

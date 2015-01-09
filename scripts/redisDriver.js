@@ -38,7 +38,8 @@ exports.deletePage = function(url,data){
 exports.savePage = function(data){
 	var deferred = Q.defer();
 	
-	util.createURL(4).then(doSave)
+	doSave(util.createReadableURL())
+
 	function doSave(url){
 		client.set(url, JSON.stringify(data), function (err, reply){
 			if(err) deferred.reject('failed to save');

@@ -4,6 +4,9 @@
 var Q		= require('q');
 var crypt 	= require('crypto');
 var marked	= require('marked'); 
+var adjNoun = require('adj-noun');
+
+adjNoun.seed(31337);
 
 // configure marked here so its not in app
 
@@ -23,10 +26,15 @@ exports.marked = marked;
 
 exports.createURL = function(len){
 	var deferred = Q.defer();
+
 	crypt.randomBytes(len, function(err, buf) {
 		if(err) deferred.reject(err);
 		var token = buf.toString('hex');
 		deferred.resolve(token)
 	});	
 	return deferred.promise
+}
+
+exports.createReadableURL = function(){
+	return adjNoun().join('-')
 }
